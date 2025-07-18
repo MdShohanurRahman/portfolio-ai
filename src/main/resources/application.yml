@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: portfolio-ai
+  ai:
+    openai:
+      api-key: AIzaSyD-qZRBqwGrc_Mg2tXdo9PnjlbDqxDg6GU
+      chat:
+        base-url: https://generativelanguage.googleapis.com
+        completions-path: /v1beta/openai/chat/completions
+        options:
+          model: gemini-2.0-flash
+      embedding:
+        base-url: https://generativelanguage.googleapis.com
+        embeddings-path: /v1beta/openai/embeddings
+        options:
+          model: gemini-embedding-001
+
+springdoc:
+  swagger-ui:
+    path: /
+
+app:
+  calender:
+    email: shohan.drmc@gmail.com
+    timezone: Asia/Kuala_Lumpur
+    tokensDirectoryPath: ./tokens
+    credentialsPath: classpath:/calendar/credentials.json

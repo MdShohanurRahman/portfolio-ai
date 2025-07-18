@@ -1,10 +1,4 @@
 <template>
-  <div v-if="isLoading" class="loading-text">
-    <span class="dot">.</span>
-    <span class="dot">.</span>
-    <span class="dot">.</span>
-    Processing
-  </div>
   <div class="chatbot-input">
     <textarea
         ref="messageInput"

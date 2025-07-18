@@ -3,13 +3,10 @@ package com.shohan.portfolio_ai.tools;
 import com.google.api.services.calendar.model.Event;
 import com.shohan.portfolio_ai.service.CalenderService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.ai.tool.annotation.ToolParam;
 import org.springframework.stereotype.Component;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -19,29 +16,29 @@ import java.util.List;
 @Slf4j
 public class AppointmentTool {
 
-    private final ChatClient chatClient;
+    private static final int DEFAULT_DURATION_MINUTES = 30;
     private final CalenderService calenderService;
 
-    public AppointmentTool(ChatClient chatClient, CalenderService calenderService) {
-        this.chatClient = chatClient;
+    public AppointmentTool(CalenderService calenderService) {
         this.calenderService = calenderService;
     }
 
     @Tool(description = """
             Schedule Meeting/Book Appointment.
             required inputs:
-             - Meeting summary ,
-             - Preferred date/time,
-             - Email address
-            """)
+             - Summary of the appointment (e.g., 'HR Meeting'),
+             - Preferred date/time(e.g., 'tomorrow at 3 PM', 'next Monday at 5 PM', 'July 20, 2025 10 AM'),
+             - Email address for invitation (e.g., 'john@gmail.com')
+            """
+    )
     public String bookAppointment(
-            @ToolParam(description = "Summary of the appointment (e.g., 'HR Meeting')") String summary,
-            @ToolParam(description = "Preferred date/time. Accept natural language date)") String dateTime,
-            @ToolParam(description = "Email address for invitation (e.g., 'john@gmail.com')") String email
+            @ToolParam(description = "Summary of the appointment") String summary,
+            @ToolParam(description = "Date/time in ISO 8601 format (YYYY-MM-DDTHH:MM:SS)") String startTime,
+            @ToolParam(description = "Email address") String email
     ) {
-        log.info("Received request to book appointment: Summary={}, NaturalDateTime={}, Email={}", summary, dateTime, email);
+        log.info("Received request to book appointment: Summary={}, NaturalDateTime={}, Email={}", summary, startTime, email);
         // Validate required inputs
-        if (dateTime == null || dateTime.trim().isEmpty()) {
+        if (startTime == null || startTime.trim().isEmpty()) {
             return "Date and time are required.";
         }
         if (email == null || email.trim().isEmpty()) {
@@ -51,14 +48,16 @@ public class AppointmentTool {
             return "Invalid email address format. Please provide a valid email.";
         }
 
-        String startTime = parseNaturalLanguageDate(dateTime);
         if (!isValidDateFormat(startTime)) {
             return "Couldn't understand the date/time. Please try formats like 'tomorrow 9 pm' or '10 July 8 am'";
         }
-        // Set default duration
-        int duration = 30;
+
+        if (LocalDateTime.parse(startTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME).isBefore(LocalDateTime.now())) {
+            return "Datetime cannot be in the past. Please provide a future date/time.";
+        }
+
         String endTime = LocalDateTime.parse(startTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME)
-                .plusMinutes(duration)
+                .plusMinutes(DEFAULT_DURATION_MINUTES)
                 .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
 
         try {
@@ -72,7 +71,7 @@ public class AppointmentTool {
             }
 
             String description = "Scheduled via Portfolio Assistant for discussion on " + summary;
-            log.info("Booking appointment: Summary={}, StartTime={}, EndTime={}, Attendees={}, Duration={}", summary, startTime, endTime, email, duration);
+            log.info("Booking appointment: Summary={}, StartTime={}, EndTime={}, Attendees={}, Duration={}", summary, startTime, endTime, email, DEFAULT_DURATION_MINUTES);
             Event createdEvent = calenderService.createCalendarEvent(summary, description, startTime, endTime, attendeeEmails);
             log.info("Appointment booked successfully: Event ID={}, Link={}", createdEvent.getId(), createdEvent.getHtmlLink());
 
@@ -87,7 +86,7 @@ public class AppointmentTool {
                     createdEvent.getSummary(),
                     startTime,
                     endTime,
-                    duration,
+                    DEFAULT_DURATION_MINUTES,
                     createdEvent.getHtmlLink());
         } catch (Exception e) {
             log.error("Error booking appointment", e);
@@ -101,7 +100,7 @@ public class AppointmentTool {
      * @param dateString The date string to validate.
      * @return true if the string is in the correct format, false otherwise.
      */
-    public static boolean isValidDateFormat(String dateString) {
+    public boolean isValidDateFormat(String dateString) {
         if (dateString == null || dateString.trim().isEmpty()) {
             return false;
         }
@@ -114,55 +113,6 @@ public class AppointmentTool {
             return dateString.length() == 19;
         } catch (DateTimeParseException e) {
             return false;
-        }
-    }
-
-    /**
-     * Converts a natural language date string to an ISO 8601 formatted LocalDateTime string
-     * using an AI client.
-     *
-     * @param naturalDate The natural language date string (e.g., "tomorrow at 3 PM", "next Monday").
-     * @return The ISO 8601 formatted date-time string (YYYY-MM-DDTHH:MM:SS), or null if parsing fails.
-     */
-    public String parseNaturalLanguageDate(String naturalDate) {
-        if (naturalDate == null || naturalDate.trim().isEmpty()) {
-            return null;
-        }
-        try {
-            LocalDateTime.parse(naturalDate, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-            return naturalDate;
-        } catch (DateTimeParseException e) {
-            System.out.println("Attempting AI parsing for natural date: " + naturalDate);
-        }
-        try {
-            return chatClient.prompt()
-                    .user(userSpec -> userSpec.text("""
-                                    Convert this natural language date to ISO 8601 format (YYYY-MM-DDTHH:MM:SS).
-                                    If the time is not specified, assume 09:00:00.
-                                    If the date is not specified, assume today.
-                                    Example: "tomorrow" -> "{tomorrow_date}T09:00:00"
-                                    Example: "next monday at 5pm" -> "{next_monday_date}T17:00:00"
-                                    Example: "July 20, 2025 10am" -> "2025-07-20T10:00:00"
-                                    
-                                    Current date: {currentDate}
-                                    Current time: {currentTime}
-                                    Input: {naturalDate}
-                                    Respond ONLY with the ISO 8601 format (YYYY-MM-DDTHH:MM:SS), nothing else.
-                                    """
-                            )
-                            .param("naturalDate", naturalDate)
-                            .param("currentDate", LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE))
-                            .param("currentTime", LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")))
-                            .param("tomorrow_date", LocalDate.now().plusDays(1).format(DateTimeFormatter.ISO_LOCAL_DATE))
-                            .param("next_monday_date", LocalDate.now().plusWeeks(1).with(DayOfWeek.MONDAY).format(DateTimeFormatter.ISO_LOCAL_DATE)))
-                    .call()
-                    .entity(String.class);
-        } catch (DateTimeParseException e) {
-            log.error("AI response was not a valid ISO 8601 date: {}", e.getMessage());
-            return null;
-        } catch (Exception e) {
-            log.error("Error during AI parsing of natural date '{}': {}", naturalDate, e.getMessage());
-            return null;
         }
     }
 

@@ -11,12 +11,12 @@ import java.time.LocalDateTime;
 public class DateTimeTool {
 
     @Tool(description = "Get the current date and time in the user's timezone")
-    String getCurrentDateTime() {
+    public String getCurrentDateTime() {
         return LocalDateTime.now().atZone(LocaleContextHolder.getTimeZone().toZoneId()).toString();
     }
 
     @Tool(description = "Get tomorrow's date in the user's timezone")
-    String getTomorrowsDate() {
+    public String getTomorrowsDate() {
         return LocalDate.now().plusDays(1).toString();
     }
 

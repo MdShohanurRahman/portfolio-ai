@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Portfolio - Software Engineer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            color: #e2e8f0;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 64px;
+            background: #1e293b;
+            transition: width 0.3s ease, background 0.3s ease;
+            z-index: 50;
+        }
+
+        .sidebar:hover {
+            width: 200px;
+            background: #2d3748;
+        }
+
+        .sidebar:hover .nav-text {
+            display: inline;
+        }
+
+        .nav-text {
+            display: none;
+        }
+
+        .nav-icon {
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .sidebar a:hover .nav-icon {
+            transform: scale(1.2);
+        }
+
+        .code-block {
+            background: #1e293b;
+            border-left: 4px solid #10b981;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .code-block:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3);
+        }
+
+        .header-bg {
+            background: url('https://source.unsplash.com/random/1920x1080/?coding,terminal') no-repeat center center/cover;
+            position: relative;
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(17, 24, 39, 0.9), rgba(4, 120, 87, 0.9));
+        }
+
+        .header-content {
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .skill-item {
+            background: #2d3748;
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            transition: background 0.3s ease;
+        }
+
+        .skill-item:hover {
+            background: #4b5563;
+        }
+
+        .btn {
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+        }
+
+        .chatbot-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #10b981;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, background 0.3s ease;
+            z-index: 100;
+        }
+
+        .chatbot-icon:hover {
+            transform: scale(1.1);
+            background: #059669;
+        }
+
+        .chatbot-box {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 300px;
+            background: #1e293b;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            display: none;
+            flex-direction: column;
+            z-index: 100;
+        }
+
+        .chatbot-box.active {
+            display: flex;
+        }
+
+        .chatbot-header {
+            background: #10b981;
+            padding: 1rem;
+            border-radius: 0.5rem 0.5rem 0 0;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chatbot-messages {
+            flex-grow: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            max-height: 300px;
+        }
+
+        .chatbot-input {
+            padding: 1rem;
+            border-top: 1px solid #2d3748;
+        }
+
+        .chatbot-input input {
+            width: 100%;
+            padding: 0.5rem;
+            background: #2d3748;
+            color: white;
+            border: none;
+            border-radius: 0.25rem;
+        }
+
+        .footer {
+            background: #1e293b;
+            padding: 2rem;
+            border-top: 4px solid #10b981;
+        }
+
+        @media (max-width: 640px) {
+            .header-bg {
+                min-height: 400px;
+            }
+
+            .header-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .header-content p {
+                font-size: 1.25rem;
+            }
+
+            .header-content .flex {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .header-content .space-x-6 {
+                gap: 0;
+                flex-direction: column;
+                row-gap: 1rem;
+            }
+
+            .header-content .space-x-4 {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Sidebar Navigation -->
+<nav class="sidebar flex flex-col items-center py-6 space-y-6 text-gray-400">
+    <a class="flex items-center space-x-2 hover:text-cyan-400" href="#home">
+        <i class="fas fa-home text-xl nav-icon" style="color: #22d3ee;"></i>
+        <span class="nav-text">Home</span>
+    </a>
+    <a class="flex items-center space-x-2 hover:text-cyan-400" href="#about">
+        <i class="fas fa-user text-xl nav-icon" style="color: #f472b6;"></i>
+        <span class="nav-text">About</span>
+    </a>
+    <a class="flex items-center space-x-2 hover:text-cyan-400" href="#experience">
+        <i class="fas fa-briefcase text-xl nav-icon" style="color: #facc15;"></i>
+        <span class="nav-text">Experience</span>
+    </a>
+    <a class="flex items-center space-x-2 hover:text-cyan-400" href="#projects">
+        <i class="fas fa-code text-xl nav-icon" style="color: #10b981;"></i>
+        <span class="nav-text">Projects</span>
+    </a>
+    <a class="flex items-center space-x-2 hover:text-cyan-400" href="#education">
+        <i class="fas fa-graduation-cap text-xl nav-icon" style="color: #a78bfa;"></i>
+        <span class="nav-text">Education</span>
+    </a>
+    <a class="flex items-center space-x-2 hover:text-cyan-400" href="#skills">
+        <i class="fas fa-tools text-xl nav-icon" style="color: #ef4444;"></i>
+        <span class="nav-text">Skills</span>
+    </a>
+    <a class="flex items-center space-x-2 hover:text-cyan-400" href="#certificates">
+        <i class="fas fa-certificate text-xl nav-icon" style="color: #60a5fa;"></i>
+        <span class="nav-text">Certificates</span>
+    </a>
+    <a class="flex items-center space-x-2 hover:text-cyan-400" href="#blogs">
+        <i class="fas fa-blog text-xl nav-icon" style="color: #f59e0b;"></i>
+        <span class="nav-text">Blogs</span>
+    </a>
+</nav>
+
+<!-- Main Content -->
+<main class="ml-16 p-6">
+    <!-- Header Section -->
+    <header id="home" class="header-bg relative shadow-2xl rounded-b-3xl overflow-hidden" style="background: linear-gradient(135deg, #091717 0%, #0d1b16 100%);">
+        <div class="header-content text-center relative z-10 px-6 py-12 md:py-20">
+
+            <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-4 animate-pulse drop-shadow-2xl tracking-tight">
+                Shohanur Rahman
+            </h1>
+            <p class="text-2xl md:text-3xl text-cyan-200 mb-8 font-mono tracking-wide">
+                Software Engineer <span class="mx-2 text-cyan-400">|</span> Crafting Code with Passion
+            </p>
+            <div class="flex flex-col md:flex-row justify-center items-center md:space-x-8 space-y-2 md:space-y-0 mb-8">
+                <a class="text-white hover:text-cyan-300 flex items-center space-x-2 bg-cyan-900/60 px-4 py-2 rounded-lg shadow transition hover:scale-105"
+                   href="mailto:john.doe@example.com">
+                    <i class="fas fa-envelope text-cyan-300 text-xl"></i>
+                    <span class="font-semibold">john.doe@example.com</span>
+                </a>
+                <a class="text-white hover:text-cyan-300 flex items-center space-x-2 bg-cyan-900/60 px-4 py-2 rounded-lg shadow transition hover:scale-105" href="tel:+1234567890">
+                    <i class="fas fa-phone text-cyan-300 text-xl"></i>
+                    <span class="font-semibold">+1 (234) 567-890</span>
+                </a>
+                <a class="text-white hover:text-cyan-300 flex items-center space-x-2 bg-cyan-900/60 px-4 py-2 rounded-lg shadow transition hover:scale-105" href="tel:+1234567890">
+                    <i class="fas fa-briefcase text-cyan-300 text-xl"></i>
+                    <span class="font-semibold">5+ Years Experience</span>
+                </a>
+            </div>
+            <div class="flex justify-center space-x-8 mb-8">
+                <a class="group" href="https://github.com" aria-label="GitHub">
+                    <span class="inline-block bg-black/40 p-4 rounded-full shadow-lg transition group-hover:scale-110 group-hover:bg-cyan-900/80">
+                        <i class="fab fa-github text-3xl text-pink-400 group-hover:text-cyan-400"></i>
+                    </span>
+                </a>
+                <a class="group" href="https://linkedin.com" aria-label="LinkedIn">
+                    <span class="inline-block bg-black/40 p-4 rounded-full shadow-lg transition group-hover:scale-110 group-hover:bg-cyan-900/80">
+                        <i class="fab fa-linkedin text-3xl text-blue-400 group-hover:text-cyan-400"></i>
+                    </span>
+                </a>
+                <a class="group" href="https://leetcode.com" aria-label="LeetCode">
+                    <span class="inline-block bg-black/40 p-4 rounded-full shadow-lg transition group-hover:scale-110 group-hover:bg-cyan-900/80">
+                        <i class="fas fa-code text-3xl text-green-400 group-hover:text-cyan-400"></i>
+                    </span>
+                </a>
+            </div>
+            <div class="flex flex-col md:flex-row justify-center items-center space-y-2 md:space-y-0 md:space-x-6">
+                <a class="btn bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-10 py-4 rounded-xl font-bold shadow-lg hover:from-cyan-400 hover:to-blue-400 transition text-lg tracking-wide"
+                   href="/resume.pdf">
+                    <i class="fas fa-download mr-2"></i>Get Resume
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Me Section -->
+    <section id="about" class="py-12">
+        <h2 class="text-3xl font-bold text-cyan-400 mb-6">// About Me</h2>
+        <div class="code-block flex items-center space-x-6">
+            <img alt="Profile Photo" class="w-32 h-32 rounded-full border-2 border-cyan-400"
+                 src="https://i.pravatar.cc/150?img=3">
+            <p class="text-gray-300">
+                I'm a passionate software engineer with a knack for building scalable web applications. My expertise
+                lies in full-stack development, with a focus on creating user-friendly interfaces and robust backend
+                systems. I love tackling complex problems and writing clean, efficient code.
+            </p>
+        </div>
+    </section>
+
+    <!-- Working Experience Section -->
+    <section id="experience" class="py-12">
+        <h2 class="text-3xl font-bold text-cyan-400 mb-6">// Working Experience</h2>
+        <div class="code-block space-y-4">
+            <div>
+                <h3 class="text-xl font-semibold text-gray-200 flex items-center">
+                    <i class="fas fa-briefcase  text-cyan-400 text-xl mr-2 nav-icon"></i>
+                    Senior Software Engineer @ TechCorp
+                </h3>
+                <p class="text-gray-400 flex items-center">
+                    <i class="fas fa-calendar-alt  text-cyan-400 text-xl mr-2 nav-icon"></i>
+                    Jan 2022 - Present
+                </p>
+                <ul class="list-disc pl-6 text-gray-300">
+                    <li>Led a team of developers to build a cloud-based SaaS platform</li>
+                    <li>Improved user retention by 30%</li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold text-gray-200 flex items-center">
+                    <i class="fas fa-briefcase  text-cyan-400 text-xl mr-2 nav-icon"></i>
+                    Software Engineer @ InnovateSoft
+                </h3>
+                <p class="text-gray-400 flex items-center">
+                    <i class="fas fa-calendar-alt  text-cyan-400 text-xl mr-2 nav-icon"></i>
+                    Jun 2019 - Dec 2021
+                </p>
+                <ul class="list-disc pl-6 text-gray-300">
+                    <li>Led a team of developers to build a cloud-based SaaS platform</li>
+                    <li>Improved user retention by 30%</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Educational Background Section -->
+    <section id="education" class="py-12">
+        <h2 class="text-3xl font-bold text-cyan-400 mb-6">// Educational Background</h2>
+        <div class="code-block space-y-4">
+            <div>
+                <h3 class="text-xl font-semibold text-gray-200 flex items-center">
+                    <i class="fas fa-graduation-cap text-cyan-400 text-xl mr-2"></i>
+                    B.Sc. in Computer Science
+                </h3>
+                <p class="text-gray-400">University of Technology, 2015 - 2019</p>
+                <p class="text-gray-300">Graduated with honors, specializing in software engineering and algorithms.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-12">
+        <h2 class="text-3xl font-bold text-cyan-400 mb-6">// Projects</h2>
+        <div class="code-block space-y-4">
+            <div>
+                <h3 class="text-xl font-semibold text-gray-200">E-Commerce Platform</h3>
+                <p class="text-gray-300">A full-stack e-commerce application built with React, Node.js, and MongoDB.</p>
+                <a class="text-cyan-400 hover:underline" href="https://github.com">View on GitHub</a>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold text-gray-200">Task Management App</h3>
+                <p class="text-gray-300">A productivity app with real-time collaboration using Vue.js and Firebase.</p>
+                <a class="text-cyan-400 hover:underline" href="https://github.com">View on GitHub</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills and Proficiency Section -->
+    <section id="skills" class="py-12">
+        <h2 class="text-3xl font-bold text-cyan-400 mb-8 text-center">// Skills & Proficiency</h2>
+        <div class="code-block p-8 rounded-xl shadow-lg bg-gradient-to-br from-gray-800 to-gray-900">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Languages -->
+                <div>
+                    <h3 class="text-xl font-semibold text-cyan-400 mb-4 text-center">Languages</h3>
+                    <ul class="space-y-3">
+                        <li class="skill-item flex items-center justify-between bg-gray-700 px-4 py-2 rounded-lg shadow">
+                            <span>Java</span>
+                            <span class="text-cyan-400 text-sm">Expert, 7 Years</span>
+                        </li>
+                        <li class="skill-item flex items-center justify-between bg-gray-700 px-4 py-2 rounded-lg shadow">
+                            <span>Python</span>
+                            <span class="text-cyan-400 text-sm">Advanced, 5 Years</span>
+                        </li>
+                        <li class="skill-item flex items-center justify-between bg-gray-700 px-4 py-2 rounded-lg shadow">
+                            <span>JavaScript</span>
+                            <span class="text-cyan-400 text-sm">Expert, 6 Years</span>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Frameworks -->
+                <div>
+                    <h3 class="text-xl font-semibold text-cyan-400 mb-4 text-center">Frameworks</h3>
+                    <ul class="space-y-3">
+                        <li class="skill-item flex items-center justify-between bg-gray-700 px-4 py-2 rounded-lg shadow">
+                            <span>React</span>
+                            <span class="text-cyan-400 text-sm">Advanced, 4 Years</span>
+                        </li>
+                        <li class="skill-item flex items-center justify-between bg-gray-700 px-4 py-2 rounded-lg shadow">
+                            <span>Django</span>
+                            <span class="text-cyan-400 text-sm">Intermediate, 3 Years</span>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Tools -->
+                <div>
+                    <h3 class="text-xl font-semibold text-cyan-400 mb-4 text-center">Tools</h3>
+                    <ul class="space-y-3">
+                        <li class="skill-item flex items-center justify-between bg-gray-700 px-4 py-2 rounded-lg shadow">
+                            <span>AWS</span>
+                            <span class="text-cyan-400 text-sm">Advanced, 4 Years</span>
+                        </li>
+                        <li class="skill-item flex items-center justify-between bg-gray-700 px-4 py-2 rounded-lg shadow">
+                            <span>Docker</span>
+                            <span class="text-cyan-400 text-sm">Intermediate, 2 Years</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certificates Section -->
+    <section id="certificates" class="py-12">
+        <h2 class="text-3xl font-bold text-cyan-400 mb-6">// Certificates</h2>
+        <div class="code-block space-y-4">
+            <div>
+                <h3 class="text-xl font-semibold text-gray-200">AWS Certified Developer</h3>
+                <p class="text-gray-400">Amazon Web Services, 2021</p>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold text-gray-200">Certified Kubernetes Administrator</h3>
+                <p class="text-gray-400">CNCF, 2022</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blogs Section -->
+    <section id="blogs" class="py-12">
+        <h2 class="text-3xl font-bold text-cyan-400 mb-6">// My Blogs</h2>
+        <div class="code-block space-y-4">
+            <div>
+                <h3 class="text-xl font-semibold text-gray-200">Building Scalable APIs with Node.js</h3>
+                <p class="text-gray-300">A deep dive into creating performant RESTful APIs.</p>
+                <a class="text-cyan-400 hover:underline" href="https://blog.example.com">Read More</a>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold text-gray-200">Mastering React Hooks</h3>
+                <p class="text-gray-300">A guide to leveraging React Hooks for state management.</p>
+                <a class="text-cyan-400 hover:underline" href="https://blog.example.com">Read More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-12">
+        <h2 class="text-3xl font-bold text-cyan-400 mb-6">// Contact Me</h2>
+        <div class="code-block">
+            <p class="text-gray-300">Feel free to reach out via email at <a class="text-cyan-400 hover:underline"
+                                                                            href="mailto:john.doe@example.com">john.doe@example.com</a>
+                or connect with me on LinkedIn.</p>
+        </div>
+    </section>
+</main>
+
+<!-- Footer Section -->
+<footer class="footer text-center">
+    <div class="mb-4">
+        <p class="text-gray-200">John Doe © 2025</p>
+        <p class="text-gray-400">Software Engineer | Full Stack Developer</p>
+    </div>
+    <div class="flex justify-center space-x-4 mb-4">
+        <a class="text-gray-200 hover:text-cyan-400" href="mailto:john.doe@example.com">
+            <i class="fas fa-envelope text-cyan-400"></i> john.doe@example.com
+        </a>
+        <a class="text-gray-200 hover:text-cyan-400" href="tel:+1234567890">
+            <i class="fas fa-phone text-cyan-400"></i> +1 (234) 567-890
+        </a>
+    </div>
+    <div class="flex justify-center space-x-4">
+        <a class="text-gray-200 hover:text-cyan-400" href="https://github.com">
+            <i class="fab fa-github text-2xl" style="color: #f472b6;"></i>
+        </a>
+        <a class="text-gray-200 hover:text-cyan-400" href="https://linkedin.com">
+            <i class="fab fa-linkedin text-2xl" style="color: #60a5fa;"></i>
+        </a>
+        <a class="text-gray-200 hover:text-cyan-400" href="https://leetcode.com">
+            <i class="fas fa-code text-2xl" style="color: #10b981;"></i>
+        </a>
+    </div>
+</footer>
+
+<!-- Chatbot Icon -->
+<div class="chatbot-icon" onclick="toggleChatbot()">
+    <i class="fas fa-robot text-2xl"></i>
+</div>
+
+<!-- Chatbot Box -->
+<div id="chatbotBox" class="chatbot-box">
+    <div class="chatbot-header">
+        <span>AI Assistant</span>
+        <button class="text-white" onclick="toggleChatbot()">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+    <div class="chatbot-messages">
+        <p class="text-gray-300">Hello! I'm your AI assistant. Ask me anything about the portfolio or software
+            engineering!</p>
+    </div>
+    <div class="chatbot-input">
+        <input onkeydown="if(event.key === 'Enter') sendMessage(this)" placeholder="Type your message..." type="text">
+    </div>
+</div>
+
+<script>
+    function toggleChatbot() {
+        const chatbotBox = document.getElementById('chatbotBox');
+        chatbotBox.classList.toggle('active');
+    }
+
+    function sendMessage(input) {
+        const message = input.value.trim();
+        if (!message) return;
+        const messagesContainer = document.querySelector('.chatbot-messages');
+        const userMessage = document.createElement('p');
+        userMessage.className = 'text-gray-200 mt-2';
+        userMessage.textContent = `You: ${message}`;
+        messagesContainer.appendChild(userMessage);
+        const aiResponse = document.createElement('p');
+        aiResponse.className = 'text-gray-300 mt-2';
+        aiResponse.textContent = `AI: Thanks for your message! I'm a demo bot, so I can't fully respond, but feel free to explore the portfolio!`;
+        messagesContainer.appendChild(aiResponse);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        input.value = '';
+    }
+</script>
+</body>
+</html>

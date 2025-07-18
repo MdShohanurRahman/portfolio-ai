@@ -1,0 +1,257 @@
+<template>
+  <Sidebar/>
+  <!-- Main Content -->
+  <main class="ml-16 p-6">
+    <Header/>
+    <AboutMe/>
+    <Experience/>
+    <Education/>
+    <Projects/>
+    <Skills/>
+    <Certificates/>
+    <Blogs/>
+  </main>
+  <Footer/>
+  <Chatbot/>
+</template>
+<script>
+import Chatbot from "@/components/Chatbot.vue";
+import Sidebar from "@/components/Sidebar.vue";
+import Header from "@/components/Header.vue";
+import AboutMe from "@/components/AboutMe.vue";
+import Experience from "@/components/Experience.vue";
+import Education from "@/components/Education.vue";
+import Projects from "@/components/Projects.vue";
+import Skills from "@/components/Skills.vue";
+import Footer from "@/components/Footer.vue";
+import Certificates from "@/components/Certificates.vue";
+import Blogs from "@/components/Blogs.vue";
+
+export default {
+  name: 'Portfolio',
+  components: {
+    Blogs,
+    Certificates,
+    Footer,
+    Skills,
+    Projects,
+    Education,
+    Experience,
+    AboutMe,
+    Header,
+    Sidebar,
+    Chatbot
+  },
+  data() {
+    return {
+      portfolio: {
+        name: "Shohanur Rahman",
+        title: "Senior Software Engineer",
+        titleTag: "Crafting Code with Passion",
+        avatar: "https://i.pravatar.cc/150?img=3",
+        yearOfExperience: "6",
+        dateOfBirth: "17 October 1996",
+        email: "shohan.drmc@gmail.com",
+        phone: "+60196249848",
+        currentLocation: "Cyberjaya-63000, Malaysia",
+        nationality: "Bangladeshi",
+        aboutMe: "I'm a passionate software engineer with a knack for building scalable web applications. My expertise lies in full-stack development, with a focus on creating user-friendly interfaces and robust backend systems. I love tackling complex problems and writing clean, efficient code.",
+        socialLinks: {
+          github: "https://github.com/MdShohanurRahman",
+          linkedin: "https://www.linkedin.com/in/shohanur-rahman-674897180/",
+          leetcode: "https://leetcode.com/u/user1633lF/",
+          facebook: "https://www.facebook.com/shohanur.rahman3/",
+        },
+        education: [
+          {
+            institution: "Mawlana Bhashani Science and Technology University",
+            degree: "Bsc Engineering in Information and Communication Technology",
+            duration: "2015 - 2020",
+            location: "Tangail, Dhaka, Bangladesh",
+            gpa: "3.35/4.00",
+            description: "Graduated with a focus on software engineering and algorithms. Developed strong problem-solving skills and a solid foundation in computer science principles."
+          }
+        ],
+        experiences: [
+          {
+            company: "Liberty General Insurance Berhad",
+            location: "Pavilion Damansara, Malaysia",
+            position: "Senior Software Engineer",
+            duration: "July 2024 - Present",
+            payroll: "Reliable Business Technology Sdn Bhd",
+            contributions: [
+              "Implemented LHDN eInvoice functionality for Liberty clients, driving operational efficiency and regulatory compliance",
+              "Modernized a legacy codebase by adopting microservices architecture and integrating CI/CD pipelines using Jenkins, enabling seamless automated deployments",
+              "Led cross-functional teams overseeing both back-end and front-end development, ensuring the delivery of highquality solutions aligned with business objectives",
+              "Developed and launched the Liberty Portal for internal and external users, incorporating Microsoft Entra ID for\n" +
+              "secure authentication",
+              "Designed and implemented a WhatsApp notifier for sending automated notifications directly to clients’ WhatsApp\n" +
+              "numbers",
+              "Built a dynamic invoice PDF generator to streamline invoicing processes and improve client interactions",
+            ],
+            toolsUtilized: ["Java", "Spring Boot", "Vue.js", "MS SQL", "GitHub", "Jenkins", "Microsoft Entra ID"]
+          },
+          {
+            company: "TM Research and Development",
+            location: "Cyberjaya, Malaysia",
+            position: "Backend Engineer",
+            duration: "June 2023 - June 2024",
+            payroll: "Reliable Business Technology Sdn Bhd",
+            contributions: [
+              "Enhanced application performance by optimizing SQL queries and database operations, resulting in improved system efficiency",
+              "Delivered scalable solutions by leveraging Firebase Cloud Messaging and implementing robust design patterns to support growth and reliability",
+              "Played a key role in API enhancements and promptly resolved production issues, ensuring seamless system functionality and user satisfaction",
+              "Optimized database queries and improved data retrieval processes, resulting in a 30% increase in application performance",
+              "Technologies utilized: Java, Dropwizard, Oracle SQL, GitLab"
+            ],
+            toolsUtilized: ["Java", "Dropwizard", "Oracle SQL", "GitLab", "Jenkins"],
+          },
+          {
+            company: "Bitmascot (Pvt.) Ltd",
+            location: "Dhaka, Bangladesh",
+            position: "Software Engineer",
+            duration: "February 2022 - May 2023",
+            payroll: "Bitmascot (Pvt.) Ltd",
+            contributions: [
+              "Integrated multiple payment gateways to support diverse transaction methods and enhance user convenience",
+              "Connected and streamlined Point of Sale (POS) applications with the billing system for seamless operation",
+              "Migrated the legacy UI to a modern frontend framework, improving usability and aesthetics",
+              "Developed a robust system to manage gift cards across various Point of Sale (POS) applications, offering flexibility to users",
+              "Technologies utilized: Groovy-Grails, Java, MySQL, RabbitMQ, Payment Gateways, Websocket, React.js, Vue.js"
+            ],
+            toolsUtilized: ["Groovy-Grails", "Java", "MySQL", "RabbitMQ", "Payment Gateways", "Websocket", "React.js", "Vue.js"]
+          }
+        ],
+        skills: [
+          {
+            category: "Programming Languages",
+            items: [
+              {name: "Java", proficiency: "Expert", years: "6"},
+              {name: "JavaScript", proficiency: "Expert", years: "5"},
+              {name: "Python", proficiency: "Intermediate", years: "2"},
+              {name: "Groovy", proficiency: "Intermediate", years: "3"},
+              {name: "C/C++", proficiency: "Intermediate", years: "3"},
+            ]
+          },
+          {
+            category: "Web Technologies",
+            items: [
+              {name: "HTML/CSS", proficiency: "Basic", years: "3"},
+              {name: "Bootstrap", proficiency: "Intermediate", years: "3"},
+              {name: "Vue.js", proficiency: "Advanced", years: "4"},
+              {name: "React.js", proficiency: "Intermediate", years: "2"},
+              {name: "Angular", proficiency: "Intermediate", years: "2"}
+            ]
+          },
+          {
+            category: "Backend Technologies",
+            items: [
+              {name: "Spring Boot", proficiency: "Advanced", years: "4"},
+              {name: "Dropwizard", proficiency: "Intermediate", years: "2"},
+              {name: "Django", proficiency: "Basic", years: "1"},
+              {name: "Node.js", proficiency: "Basic", years: "1"}
+            ]
+          },
+          {
+            category: "Databases",
+            items: [
+              {name: "MySQL", proficiency: "Intermediate", years: "3"},
+              {name: "PostgreSQL", proficiency: "Intermediate", years: "3"},
+              {name: "Oracle SQL", proficiency: "Intermediate", years: "2"},
+              {name: "MongoDB", proficiency: "Basic", years: "1"}
+            ]
+          },
+          {
+            category: "Tools & Platforms",
+            items: [
+              {name: "Git", proficiency: "Advanced", years: "5"},
+              {name: "Docker", proficiency: "Intermediate", years: "3"},
+              {name: "Kubernetes", proficiency: "Basic", years: "1"},
+              {name: "AWS", proficiency: "Intermediate", years: "2"},
+              {name: "Firebase", proficiency: "Basic", years: "1"},
+              {name: "RabbitMQ", proficiency: "Intermediate", years: "2"},
+              {name: "Kafka", proficiency: "Basic", years: "1"}
+            ]
+          }
+        ],
+        projects: [
+          {
+            title: "Shipping Rate Comparison App",
+            description: "A middleware solution that compares shipping rates between City Link Express and JT Express. Users can submit shipment details, and the app returns rate comparisons from both providers for easy decision-making",
+            toolsUtilized: ["Java", "Spring Boot", "Swagger", "MySql", "Salenium"],
+            links: {
+              github: "https://github.com/MdShohanurRahman/shipping-app",
+            },
+          },
+          {
+            title: "Real Time Chat App",
+            description: "real-time chat app using WebSocket and STOMP, with features like user authentication, message delivery tracking, unread message count, and persistence of the database for chat history.",
+            toolsUtilized: ["Java", "Spring Boot", "Vue.js", "WebSocket", "STOMP", "MySQL"],
+            links: {
+              github: "https://github.com/MdShohanurRahman/chat-app-spring-boot-vue.js"
+            }
+          },
+          {
+            title: "Push Notification App",
+            description: "A push messaging system for seamless communication across multiple devices",
+            toolsUtilized: ["Java", "Spring Boot", "Angular", "Firebase Cloud Messaging"],
+            links: {
+              github: "https://github.com/MdShohanurRahman/fcm-server"
+            }
+          }
+        ],
+        certificates: [
+          {
+            title: "Basic Java Programming Certification",
+            issuer: "Hacker Rank",
+            time: "December 2022",
+            description: "Basic topics in Java language such as classes, data structures, inheritance, exception handling and more.",
+            link: "https://www.hackerrank.com/certificates/73c0718288de"
+          }
+        ],
+        availabilityStatus: {
+          isAvailable: true,
+          availabilityMessage: "Currently available for new opportunities",
+          expectedSalary: "RM 11,000 - RM 12,000 per month",
+        },
+        family: {
+          wife: "Farzana Akter",
+          children: [
+            {name: "Izwan Rahman Sanan"},
+          ],
+        },
+        resumeLinks: {
+          pdf: "https://example.com/resume.pdf"
+        }
+      },
+      faqs: [
+        {
+          question: "What is your approach to problem-solving?",
+          answer: "I believe in breaking down complex problems into smaller, manageable parts. I analyze each part, identify potential solutions, and then implement the most effective one. I also value collaboration and often seek input from colleagues to gain different perspectives."
+        },
+        {
+          question: "How do you stay updated with the latest technologies?",
+          answer: "I regularly read tech blogs, follow industry leaders on social media, and participate in online courses and webinars. I also enjoy experimenting with new technologies in personal projects."
+        },
+        {
+          question: "Can you describe a challenging project you worked on?",
+          answer: "One of the most challenging projects I worked on was a real-time chat application that required low latency and high availability. I had to implement WebSocket for real-time communication and ensure that the system could handle a large number of concurrent users without performance degradation."
+        },
+        {
+          question: "What are your career goals?",
+          answer: "My short-term goal is to continue developing my skills in software engineering, particularly in backend development and cloud technologies. In the long term, I aspire to take on leadership roles where I can mentor junior developers and contribute to strategic decision-making."
+        },
+        {
+          question: "How do you handle tight deadlines?",
+          answer: "I prioritize tasks based on their urgency and importance. I also communicate with my team to ensure we are aligned on priorities. If necessary, I am willing to put in extra hours to meet deadlines while maintaining the quality of work."
+        }
+      ]
+    };
+  },
+  methods: {}
+};
+</script>
+
+<style>
+
+</style>

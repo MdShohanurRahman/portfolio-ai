@@ -1,0 +1,1476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shohanur Rahman | Software Engineer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <style>
+        :root {
+            --primary: #00f0ff;
+            --secondary: #ff00f0;
+            --accent: #f0ff00;
+            --dark: #0a0a1a;
+            --darker: #050510;
+            --light: #f0f0ff;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: var(--dark);
+            color: var(--light);
+            transition: background-color 0.5s ease;
+        }
+
+        body.light-mode {
+            background-color: #f0f0ff;
+            color: #0a0a1a;
+        }
+
+        /* Particle.js container */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        /* Glowing text effect */
+        .glow {
+            text-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary);
+        }
+
+        .glow-secondary {
+            text-shadow: 0 0 10px var(--secondary), 0 0 20px var(--secondary);
+        }
+
+        .glow-accent {
+            text-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent);
+        }
+
+        /* 3D Card Effect */
+        .card-3d {
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+            perspective: 1000px;
+        }
+
+        .card-3d:hover {
+            transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
+            box-shadow: 0 20px 40px rgba(0, 240, 255, 0.2);
+        }
+
+        /* Neon border effect */
+        .neon-border {
+            position: relative;
+            border: 2px solid transparent;
+            border-radius: 0.5rem;
+            background: linear-gradient(var(--darker), var(--darker)) padding-box,
+            linear-gradient(135deg, var(--primary), var(--secondary)) border-box;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+        }
+
+        .light-mode .neon-border {
+            background: linear-gradient(#f0f0ff, #f0f0ff) padding-box,
+            linear-gradient(135deg, var(--primary), var(--secondary)) border-box;
+        }
+
+        /* Animated gradient text */
+        .gradient-text {
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: gradient 8s ease infinite;
+            background-size: 200% 200%;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--darker);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(var(--primary), var(--secondary));
+            border-radius: 4px;
+        }
+
+        .light-mode ::-webkit-scrollbar-track {
+            background: #e0e0ff;
+        }
+
+        /* Navigation */
+        .nav-item {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-item:hover::after {
+            transform: translateX(0);
+        }
+
+        .nav-item.active::after {
+            transform: translateX(0);
+        }
+
+        /* Section animations */
+        .section {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Chatbot */
+        .chatbot-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .chatbot-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .chatbot-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.8);
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 240, 255, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(0, 240, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 240, 255, 0); }
+        }
+
+        .chatbot-box {
+            width: 320px;
+            height: 500px;
+            background: var(--darker);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            display: none;
+            flex-direction: column;
+            border: 1px solid rgba(0, 240, 255, 0.3);
+        }
+
+        .light-mode .chatbot-box {
+            background: #ffffff;
+            border: 1px solid rgba(0, 240, 255, 0.5);
+        }
+
+        .chatbot-header {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: var(--dark);
+            padding: 15px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chatbot-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            padding: 10px 15px;
+            border-radius: 18px;
+            max-width: 80%;
+            position: relative;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .user-message {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: var(--dark);
+            margin-left: auto;
+            border-bottom-right-radius: 5px;
+        }
+
+        .bot-message {
+            background: rgba(0, 240, 255, 0.1);
+            color: var(--light);
+            margin-right: auto;
+            border-bottom-left-radius: 5px;
+        }
+
+        .light-mode .bot-message {
+            color: var(--dark);
+            background: rgba(0, 240, 255, 0.1);
+        }
+
+        .chatbot-input {
+            padding: 15px;
+            border-top: 1px solid rgba(0, 240, 255, 0.2);
+            display: flex;
+        }
+
+        .chatbot-input input {
+            flex: 1;
+            padding: 10px 15px;
+            border-radius: 25px;
+            border: none;
+            background: rgba(0, 240, 255, 0.1);
+            color: var(--light);
+            outline: none;
+        }
+
+        .light-mode .chatbot-input input {
+            background: rgba(0, 240, 255, 0.1);
+            color: var(--dark);
+        }
+
+        .chatbot-input button {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: var(--dark);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            margin-left: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .chatbot-input button:hover {
+            transform: scale(1.1);
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -30px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--primary);
+            box-shadow: 0 0 0 4px rgba(0, 240, 255, 0.3);
+        }
+
+        /* Skill bars */
+        .skill-bar {
+            height: 10px;
+            background: rgba(0, 240, 255, 0.1);
+            border-radius: 5px;
+            margin-top: 5px;
+            overflow: hidden;
+        }
+
+        .skill-progress {
+            height: 100%;
+            border-radius: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 1.5s ease;
+        }
+
+        /* Mobile menu */
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .section {
+                padding: 2rem 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .card-3d {
+                transform: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="relative">
+<!-- Particle.js Background for Hero -->
+<div id="particles-js" class="absolute top-0 left-0 w-full h-full"></div>
+
+<!-- Theme Toggle -->
+<button id="themeToggle" class="fixed top-4 right-4 z-50 w-12 h-12 rounded-full bg-gradient-to-r from-cyan-500 to-purple-500 shadow-lg flex items-center justify-center text-white">
+    <i class="fas fa-moon" id="themeIcon"></i>
+</button>
+
+<!-- Mobile Menu Button -->
+<button id="mobileMenuButton" class="md:hidden fixed top-4 left-4 z-50 w-12 h-12 rounded-full bg-gradient-to-r from-cyan-500 to-purple-500 shadow-lg flex items-center justify-center text-white">
+    <i class="fas fa-bars"></i>
+</button>
+
+<!-- Mobile Menu -->
+<div id="mobileMenu" class="mobile-menu fixed inset-0 bg-black bg-opacity-90 z-40 flex flex-col items-center justify-center transition-transform duration-300">
+    <button id="closeMobileMenu" class="absolute top-4 right-4 text-white text-2xl">
+        <i class="fas fa-times"></i>
+    </button>
+    <nav class="flex flex-col items-center space-y-8">
+        <a href="#home" class="nav-item text-2xl text-white hover:text-cyan-400">Home</a>
+        <a href="#about" class="nav-item text-2xl text-white hover:text-cyan-400">About</a>
+        <a href="#experience" class="nav-item text-2xl text-white hover:text-cyan-400">Experience</a>
+        <a href="#projects" class="nav-item text-2xl text-white hover:text-cyan-400">Projects</a>
+        <a href="#education" class="nav-item text-2xl text-white hover:text-cyan-400">Education</a>
+        <a href="#skills" class="nav-item text-2xl text-white hover:text-cyan-400">Skills</a>
+        <a href="#certificates" class="nav-item text-2xl text-white hover:text-cyan-400">Certificates</a>
+        <a href="#blogs" class="nav-item text-2xl text-white hover:text-cyan-400">Blogs</a>
+        <a href="#contact" class="nav-item text-2xl text-white hover:text-cyan-400">Contact</a>
+    </nav>
+</div>
+
+<!-- Desktop Navigation -->
+<nav class="hidden md:flex fixed left-0 top-0 h-full w-20 flex-col items-center py-12 space-y-8 z-30 bg-black bg-opacity-50 backdrop-blur-sm">
+    <a href="#home" class="nav-item flex flex-col items-center text-white hover:text-cyan-400 group">
+        <i class="fas fa-home text-xl mb-1 group-hover:scale-125 transition"></i>
+        <span class="text-xs mt-1">Home</span>
+    </a>
+    <a href="#about" class="nav-item flex flex-col items-center text-white hover:text-purple-400 group">
+        <i class="fas fa-user text-xl mb-1 group-hover:scale-125 transition"></i>
+        <span class="text-xs mt-1">About</span>
+    </a>
+    <a href="#experience" class="nav-item flex flex-col items-center text-white hover:text-yellow-400 group">
+        <i class="fas fa-briefcase text-xl mb-1 group-hover:scale-125 transition"></i>
+        <span class="text-xs mt-1">Experience</span>
+    </a>
+    <a href="#projects" class="nav-item flex flex-col items-center text-white hover:text-cyan-400 group">
+        <i class="fas fa-code text-xl mb-1 group-hover:scale-125 transition"></i>
+        <span class="text-xs mt-1">Projects</span>
+    </a>
+    <a href="#education" class="nav-item flex flex-col items-center text-white hover:text-purple-400 group">
+        <i class="fas fa-graduation-cap text-xl mb-1 group-hover:scale-125 transition"></i>
+        <span class="text-xs mt-1">Education</span>
+    </a>
+    <a href="#skills" class="nav-item flex flex-col items-center text-white hover:text-yellow-400 group">
+        <i class="fas fa-tools text-xl mb-1 group-hover:scale-125 transition"></i>
+        <span class="text-xs mt-1">Skills</span>
+    </a>
+    <a href="#certificates" class="nav-item flex flex-col items-center text-white hover:text-cyan-400 group">
+        <i class="fas fa-certificate text-xl mb-1 group-hover:scale-125 transition"></i>
+        <span class="text-xs mt-1">Certificates</span>
+    </a>
+    <a href="#blogs" class="nav-item flex flex-col items-center text-white hover:text-purple-400 group">
+        <i class="fas fa-blog text-xl mb-1 group-hover:scale-125 transition"></i>
+        <span class="text-xs mt-1">Blogs</span>
+    </a>
+    <a href="#contact" class="nav-item flex flex-col items-center text-white hover:text-yellow-400 group">
+        <i class="fas fa-envelope text-xl mb-1 group-hover:scale-125 transition"></i>
+        <span class="text-xs mt-1">Contact</span>
+    </a>
+</nav>
+
+<!-- Main Content -->
+<main class="min-h-screen relative z-10 md:ml-20">
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center relative overflow-hidden px-4">
+        <div class="container mx-auto text-center relative z-10 py-20">
+            <h1 class="hero-title text-5xl md:text-7xl font-bold mb-6 gradient-text">Shohanur Rahman</h1>
+            <p class="hero-subtitle text-xl md:text-3xl mb-8 text-cyan-300 font-mono">
+                <span class="typing-animation">Software Engineer</span>
+                <span class="text-purple-300 mx-2">|</span>
+                <span class="typing-animation">Full Stack Developer</span>
+            </p>
+
+            <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-6 mb-12">
+                <a href="mailto:shohan@example.com" class="flex items-center space-x-2 px-6 py-3 bg-black bg-opacity-50 rounded-full border border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-black transition-all duration-300">
+                    <i class="fas fa-envelope"></i>
+                    <span>shohan@example.com</span>
+                </a>
+                <a href="tel:+1234567890" class="flex items-center space-x-2 px-6 py-3 bg-black bg-opacity-50 rounded-full border border-purple-400 text-purple-400 hover:bg-purple-400 hover:text-black transition-all duration-300">
+                    <i class="fas fa-phone"></i>
+                    <span>+1 (234) 567-890</span>
+                </a>
+            </div>
+
+            <div class="flex justify-center space-x-6 mb-12">
+                <a href="https://github.com" class="w-12 h-12 rounded-full bg-black bg-opacity-50 flex items-center justify-center text-2xl text-white hover:text-cyan-400 border border-cyan-400 hover:border-cyan-400 transition-all duration-300 transform hover:scale-110">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://linkedin.com" class="w-12 h-12 rounded-full bg-black bg-opacity-50 flex items-center justify-center text-2xl text-white hover:text-blue-400 border border-blue-400 hover:border-blue-400 transition-all duration-300 transform hover:scale-110">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="https://leetcode.com" class="w-12 h-12 rounded-full bg-black bg-opacity-50 flex items-center justify-center text-2xl text-white hover:text-yellow-400 border border-yellow-400 hover:border-yellow-400 transition-all duration-300 transform hover:scale-110">
+                    <i class="fas fa-code"></i>
+                </a>
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-6">
+                <a href="/resume.pdf" class="px-8 py-4 bg-gradient-to-r from-cyan-500 to-purple-500 text-white font-bold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                    <i class="fas fa-download mr-2"></i>Download Resume
+                </a>
+                <a href="#contact" class="px-8 py-4 bg-transparent border-2 border-cyan-400 text-cyan-400 font-bold rounded-full hover:bg-cyan-400 hover:text-black transition-all duration-300 transform hover:scale-105">
+                    Contact Me
+                </a>
+            </div>
+        </div>
+
+        <div class="absolute bottom-10 left-0 right-0 flex justify-center animate-bounce">
+            <a href="#about" class="text-white text-2xl">
+                <i class="fas fa-chevron-down"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section py-20 px-4">
+        <div class="container mx-auto">
+            <h2 class="text-4xl font-bold mb-12 text-center gradient-text">About Me</h2>
+
+            <div class="max-w-4xl mx-auto neon-border p-8 card-3d">
+                <div class="flex flex-col md:flex-row items-center gap-8">
+                    <div class="w-full md:w-1/3 flex justify-center">
+                        <div class="relative">
+                            <img src="https://i.pravatar.cc/300?img=3" alt="Profile" class="w-64 h-64 rounded-full border-4 border-cyan-400 object-cover shadow-lg">
+                            <div class="absolute -bottom-2 -right-2 bg-gradient-to-r from-cyan-500 to-purple-500 text-white px-4 py-1 rounded-full text-sm font-bold">
+                                Available
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full md:w-2/3">
+                        <p class="text-lg mb-6">
+                            I'm a passionate software engineer with a knack for building scalable web applications. My expertise lies in full-stack development, with a focus on creating user-friendly interfaces and robust backend systems. I love tackling complex problems and writing clean, efficient code.
+                        </p>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <h3 class="font-bold text-cyan-400 mb-2">Name:</h3>
+                                <p>Shohanur Rahman</p>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-purple-400 mb-2">Email:</h3>
+                                <p>shohan@example.com</p>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-yellow-400 mb-2">Experience:</h3>
+                                <p>5+ Years</p>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-cyan-400 mb-2">Location:</h3>
+                                <p>San Francisco, CA</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="section py-20 px-4 bg-black bg-opacity-50">
+        <div class="container mx-auto">
+            <h2 class="text-4xl font-bold mb-12 text-center gradient-text">Work Experience</h2>
+
+            <div class="max-w-4xl mx-auto">
+                <div class="timeline">
+                    <!-- Experience Item 1 -->
+                    <div class="timeline-item neon-border p-6 mb-8 card-3d">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="text-2xl font-bold text-cyan-400 mb-2">Senior Software Engineer</h3>
+                                <h4 class="text-xl text-purple-400 mb-4">TechCorp</h4>
+                            </div>
+                            <span class="bg-gradient-to-r from-cyan-500 to-purple-500 text-black px-3 py-1 rounded-full text-sm font-bold">2022 - Present</span>
+                        </div>
+                        <ul class="list-disc pl-6 space-y-2">
+                            <li>Led a team of 5 developers to build a cloud-based SaaS platform serving over 10,000 active users</li>
+                            <li>Architected and implemented a microservices architecture that improved system reliability by 40%</li>
+                            <li>Optimized database queries reducing API response times by 65%</li>
+                            <li>Mentored junior developers through code reviews and technical workshops</li>
+                        </ul>
+                    </div>
+
+                    <!-- Experience Item 2 -->
+                    <div class="timeline-item neon-border p-6 mb-8 card-3d">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="text-2xl font-bold text-cyan-400 mb-2">Software Engineer</h3>
+                                <h4 class="text-xl text-purple-400 mb-4">InnovateSoft</h4>
+                            </div>
+                            <span class="bg-gradient-to-r from-cyan-500 to-purple-500 text-black px-3 py-1 rounded-full text-sm font-bold">2019 - 2022</span>
+                        </div>
+                        <ul class="list-disc pl-6 space-y-2">
+                            <li>Developed and maintained RESTful APIs for the company's flagship product</li>
+                            <li>Implemented CI/CD pipelines reducing deployment time by 75%</li>
+                            <li>Collaborated with UX designers to rebuild the frontend using React, improving user engagement by 30%</li>
+                            <li>Introduced automated testing practices increasing code coverage from 40% to 85%</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="section py-20 px-4">
+        <div class="container mx-auto">
+            <h2 class="text-4xl font-bold mb-12 text-center gradient-text">Education</h2>
+
+            <div class="max-w-4xl mx-auto neon-border p-8 card-3d">
+                <div class="flex flex-col md:flex-row items-center gap-8">
+                    <div class="w-full md:w-1/3 flex justify-center">
+                        <div class="bg-gradient-to-r from-cyan-500 to-purple-500 p-1 rounded-full">
+                            <div class="bg-black p-4 rounded-full">
+                                <i class="fas fa-graduation-cap text-6xl text-cyan-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full md:w-2/3">
+                        <h3 class="text-2xl font-bold text-cyan-400 mb-2">B.Sc. in Computer Science</h3>
+                        <h4 class="text-xl text-purple-400 mb-4">University of Technology</h4>
+                        <p class="mb-4">2015 - 2019 | Graduated with Honors</p>
+                        <p class="mb-4">
+                            Specialized in software engineering, algorithms, and machine learning. Completed thesis on "Optimizing Neural Networks for Real-Time Image Processing".
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-cyan-900 bg-opacity-50 rounded-full text-sm">Data Structures</span>
+                            <span class="px-3 py-1 bg-purple-900 bg-opacity-50 rounded-full text-sm">Algorithms</span>
+                            <span class="px-3 py-1 bg-cyan-900 bg-opacity-50 rounded-full text-sm">Machine Learning</span>
+                            <span class="px-3 py-1 bg-purple-900 bg-opacity-50 rounded-full text-sm">Database Systems</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section py-20 px-4 bg-black bg-opacity-50">
+        <div class="container mx-auto">
+            <h2 class="text-4xl font-bold mb-12 text-center gradient-text">Featured Projects</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                <!-- Project 1 -->
+                <div class="neon-border p-6 card-3d">
+                    <div class="flex justify-between items-start mb-4">
+                        <i class="fas fa-laptop-code text-4xl text-cyan-400"></i>
+                        <span class="px-3 py-1 bg-gradient-to-r from-cyan-500 to-purple-500 text-black rounded-full text-sm font-bold">Full Stack</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-cyan-400 mb-2">E-Commerce Platform</h3>
+                    <p class="mb-4">
+                        A full-stack e-commerce application with payment integration, product management, and user authentication.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-2 py-1 bg-cyan-900 bg-opacity-50 rounded-full text-xs">React</span>
+                        <span class="px-2 py-1 bg-purple-900 bg-opacity-50 rounded-full text-xs">Node.js</span>
+                        <span class="px-2 py-1 bg-cyan-900 bg-opacity-50 rounded-full text-xs">MongoDB</span>
+                        <span class="px-2 py-1 bg-purple-900 bg-opacity-50 rounded-full text-xs">Stripe API</span>
+                    </div>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-cyan-400 hover:underline flex items-center">
+                            <i class="fas fa-external-link-alt mr-2"></i> Live Demo
+                        </a>
+                        <a href="#" class="text-purple-400 hover:underline flex items-center">
+                            <i class="fab fa-github mr-2"></i> View Code
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="neon-border p-6 card-3d">
+                    <div class="flex justify-between items-start mb-4">
+                        <i class="fas fa-tasks text-4xl text-purple-400"></i>
+                        <span class="px-3 py-1 bg-gradient-to-r from-cyan-500 to-purple-500 text-black rounded-full text-sm font-bold">Productivity</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-cyan-400 mb-2">Task Management App</h3>
+                    <p class="mb-4">
+                        A collaborative task management application with real-time updates, team features, and analytics.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-2 py-1 bg-cyan-900 bg-opacity-50 rounded-full text-xs">Vue.js</span>
+                        <span class="px-2 py-1 bg-purple-900 bg-opacity-50 rounded-full text-xs">Firebase</span>
+                        <span class="px-2 py-1 bg-cyan-900 bg-opacity-50 rounded-full text-xs">WebSockets</span>
+                        <span class="px-2 py-1 bg-purple-900 bg-opacity-50 rounded-full text-xs">Chart.js</span>
+                    </div>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-cyan-400 hover:underline flex items-center">
+                            <i class="fas fa-external-link-alt mr-2"></i> Live Demo
+                        </a>
+                        <a href="#" class="text-purple-400 hover:underline flex items-center">
+                            <i class="fab fa-github mr-2"></i> View Code
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="neon-border p-6 card-3d">
+                    <div class="flex justify-between items-start mb-4">
+                        <i class="fas fa-robot text-4xl text-yellow-400"></i>
+                        <span class="px-3 py-1 bg-gradient-to-r from-cyan-500 to-purple-500 text-black rounded-full text-sm font-bold">AI/ML</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-cyan-400 mb-2">Sentiment Analysis Tool</h3>
+                    <p class="mb-4">
+                        A machine learning model that analyzes customer feedback and provides sentiment analysis reports.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-2 py-1 bg-cyan-900 bg-opacity-50 rounded-full text-xs">Python</span>
+                        <span class="px-2 py-1 bg-purple-900 bg-opacity-50 rounded-full text-xs">TensorFlow</span>
+                        <span class="px-2 py-1 bg-cyan-900 bg-opacity-50 rounded-full text-xs">NLTK</span>
+                        <span class="px-2 py-1 bg-purple-900 bg-opacity-50 rounded-full text-xs">Flask</span>
+                    </div>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-cyan-400 hover:underline flex items-center">
+                            <i class="fas fa-external-link-alt mr-2"></i> Live Demo
+                        </a>
+                        <a href="#" class="text-purple-400 hover:underline flex items-center">
+                            <i class="fab fa-github mr-2"></i> View Code
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 4 -->
+                <div class="neon-border p-6 card-3d">
+                    <div class="flex justify-between items-start mb-4">
+                        <i class="fas fa-mobile-alt text-4xl text-purple-400"></i>
+                        <span class="px-3 py-1 bg-gradient-to-r from-cyan-500 to-purple-500 text-black rounded-full text-sm font-bold">Mobile</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-cyan-400 mb-2">Fitness Tracker App</h3>
+                    <p class="mb-4">
+                        A cross-platform mobile application for tracking workouts, nutrition, and fitness progress.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-2 py-1 bg-cyan-900 bg-opacity-50 rounded-full text-xs">React Native</span>
+                        <span class="px-2 py-1 bg-purple-900 bg-opacity-50 rounded-full text-xs">Firebase</span>
+                        <span class="px-2 py-1 bg-cyan-900 bg-opacity-50 rounded-full text-xs">Redux</span>
+                        <span class="px-2 py-1 bg-purple-900 bg-opacity-50 rounded-full text-xs">Health API</span>
+                    </div>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-cyan-400 hover:underline flex items-center">
+                            <i class="fab fa-apple mr-2"></i> App Store
+                        </a>
+                        <a href="#" class="text-purple-400 hover:underline flex items-center">
+                            <i class="fab fa-google-play mr-2"></i> Play Store
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-12">
+                <a href="#" class="px-6 py-3 border border-cyan-400 text-cyan-400 rounded-full hover:bg-cyan-400 hover:text-black transition-all duration-300 inline-flex items-center">
+                    <i class="fab fa-github mr-2"></i> View All Projects on GitHub
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="section py-20 px-4">
+        <div class="container mx-auto">
+            <h2 class="text-4xl font-bold mb-12 text-center gradient-text">Skills & Expertise</h2>
+
+            <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Technical Skills -->
+                <div class="neon-border p-6 card-3d">
+                    <h3 class="text-2xl font-bold text-cyan-400 mb-6 text-center">
+                        <i class="fas fa-code mr-2"></i> Technical Skills
+                    </h3>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span>JavaScript/TypeScript</span>
+                                <span>95%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span>React/Node.js</span>
+                                <span>90%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span>Python/Django</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span>Database Design</span>
+                                <span>88%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 88%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tools & Technologies -->
+                <div class="neon-border p-6 card-3d">
+                    <h3 class="text-2xl font-bold text-purple-400 mb-6 text-center">
+                        <i class="fas fa-tools mr-2"></i> Tools & Technologies
+                    </h3>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span>Git/GitHub</span>
+                                <span>95%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span>AWS/Cloud</span>
+                                <span>80%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 80%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span>Docker/Kubernetes</span>
+                                <span>75%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 75%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span>CI/CD Pipelines</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 85%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Soft Skills -->
+                <div class="neon-border p-6 card-3d">
+                    <h3 class="text-2xl font-bold text-yellow-400 mb-6 text-center">
+                        <i class="fas fa-users mr-2"></i> Soft Skills
+                    </h3>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span>Team Leadership</span>
+                                <span>90%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span>Problem Solving</span>
+                                <span>95%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span>Communication</span>
+                                <span>88%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 88%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span>Project Management</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 85%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certificates Section -->
+    <section id="certificates" class="section py-20 px-4 bg-black bg-opacity-50">
+        <div class="container mx-auto">
+            <h2 class="text-4xl font-bold mb-12 text-center gradient-text">Certifications</h2>
+
+            <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Certificate 1 -->
+                <div class="neon-border p-6 card-3d">
+                    <div class="flex items-start mb-4">
+                        <div class="bg-gradient-to-r from-cyan-500 to-purple-500 p-1 rounded-lg mr-4">
+                            <div class="bg-black p-2 rounded-lg">
+                                <i class="fas fa-certificate text-3xl text-cyan-400"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-cyan-400">AWS Certified Developer</h3>
+                            <p class="text-purple-400">Amazon Web Services</p>
+                            <p class="text-sm text-gray-400">Issued: 2021 | Expires: 2024</p>
+                        </div>
+                    </div>
+                    <p class="mb-4">
+                        Demonstrated expertise in developing and maintaining applications on AWS.
+                    </p>
+                    <a href="#" class="text-cyan-400 hover:underline flex items-center">
+                        <i class="fas fa-external-link-alt mr-2"></i> View Credential
+                    </a>
+                </div>
+
+                <!-- Certificate 2 -->
+                <div class="neon-border p-6 card-3d">
+                    <div class="flex items-start mb-4">
+                        <div class="bg-gradient-to-r from-cyan-500 to-purple-500 p-1 rounded-lg mr-4">
+                            <div class="bg-black p-2 rounded-lg">
+                                <i class="fas fa-certificate text-3xl text-purple-400"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-cyan-400">Certified Kubernetes Administrator</h3>
+                            <p class="text-purple-400">Cloud Native Computing Foundation</p>
+                            <p class="text-sm text-gray-400">Issued: 2022 | Expires: 2025</p>
+                        </div>
+                    </div>
+                    <p class="mb-4">
+                        Validated skills in Kubernetes administration, troubleshooting, and application lifecycle management.
+                    </p>
+                    <a href="#" class="text-cyan-400 hover:underline flex items-center">
+                        <i class="fas fa-external-link-alt mr-2"></i> View Credential
+                    </a>
+                </div>
+
+                <!-- Certificate 3 -->
+                <div class="neon-border p-6 card-3d">
+                    <div class="flex items-start mb-4">
+                        <div class="bg-gradient-to-r from-cyan-500 to-purple-500 p-1 rounded-lg mr-4">
+                            <div class="bg-black p-2 rounded-lg">
+                                <i class="fas fa-certificate text-3xl text-yellow-400"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-cyan-400">Google Professional Data Engineer</h3>
+                            <p class="text-purple-400">Google Cloud</p>
+                            <p class="text-sm text-gray-400">Issued: 2020 | Expires: 2023</p>
+                        </div>
+                    </div>
+                    <p class="mb-4">
+                        Certified in designing and building data processing systems on Google Cloud.
+                    </p>
+                    <a href="#" class="text-cyan-400 hover:underline flex items-center">
+                        <i class="fas fa-external-link-alt mr-2"></i> View Credential
+                    </a>
+                </div>
+
+                <!-- Certificate 4 -->
+                <div class="neon-border p-6 card-3d">
+                    <div class="flex items-start mb-4">
+                        <div class="bg-gradient-to-r from-cyan-500 to-purple-500 p-1 rounded-lg mr-4">
+                            <div class="bg-black p-2 rounded-lg">
+                                <i class="fas fa-certificate text-3xl text-purple-400"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-cyan-400">React Nanodegree</h3>
+                            <p class="text-purple-400">Udacity</p>
+                            <p class="text-sm text-gray-400">Issued: 2019 | No Expiration</p>
+                        </div>
+                    </div>
+                    <p class="mb-4">
+                        Completed advanced React training including Redux, React Router, and testing.
+                    </p>
+                    <a href="#" class="text-cyan-400 hover:underline flex items-center">
+                        <i class="fas fa-external-link-alt mr-2"></i> View Credential
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blogs Section -->
+    <section id="blogs" class="section py-20 px-4">
+        <div class="container mx-auto">
+            <h2 class="text-4xl font-bold mb-12 text-center gradient-text">Latest Blogs</h2>
+
+            <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Blog 1 -->
+                <div class="neon-border p-6 card-3d">
+                    <div class="mb-4 h-48 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-code text-6xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-cyan-400 mb-2">Building Scalable APIs with Node.js</h3>
+                    <p class="text-gray-400 mb-4">Published: June 15, 2023</p>
+                    <p class="mb-4">
+                        A deep dive into architectural patterns and best practices for building high-performance Node.js APIs that can handle millions of requests.
+                    </p>
+                    <a href="#" class="text-cyan-400 hover:underline flex items-center">
+                        Read More <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+
+                <!-- Blog 2 -->
+                <div class="neon-border p-6 card-3d">
+                    <div class="mb-4 h-48 bg-gradient-to-r from-purple-500 to-cyan-500 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-brain text-6xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-cyan-400 mb-2">Mastering React Hooks</h3>
+                    <p class="text-gray-400 mb-4">Published: May 2, 2023</p>
+                    <p class="mb-4">
+                        Comprehensive guide to leveraging React Hooks for state management, side effects, and performance optimization in modern React applications.
+                    </p>
+                    <a href="#" class="text-cyan-400 hover:underline flex items-center">
+                        Read More <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="text-center mt-12">
+                <a href="#" class="px-6 py-3 border border-cyan-400 text-cyan-400 rounded-full hover:bg-cyan-400 hover:text-black transition-all duration-300 inline-flex items-center">
+                    <i class="fas fa-book-open mr-2"></i> View All Blog Posts
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section py-20 px-4 bg-black bg-opacity-50">
+        <div class="container mx-auto">
+            <h2 class="text-4xl font-bold mb-12 text-center gradient-text">Get In Touch</h2>
+
+            <div class="max-w-4xl mx-auto neon-border p-8 card-3d">
+                <div class="flex flex-col md:flex-row gap-8">
+                    <div class="w-full md:w-1/2">
+                        <h3 class="text-2xl font-bold text-cyan-400 mb-6">Contact Information</h3>
+
+                        <div class="space-y-6">
+                            <div class="flex items-start space-x-4">
+                                <div class="bg-gradient-to-r from-cyan-500 to-purple-500 p-2 rounded-full">
+                                    <i class="fas fa-envelope text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-purple-400">Email</h4>
+                                    <a href="mailto:shohan@example.com" class="hover:text-cyan-400 transition">shohan@example.com</a>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start space-x-4">
+                                <div class="bg-gradient-to-r from-cyan-500 to-purple-500 p-2 rounded-full">
+                                    <i class="fas fa-phone text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-purple-400">Phone</h4>
+                                    <a href="tel:+1234567890" class="hover:text-cyan-400 transition">+1 (234) 567-890</a>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start space-x-4">
+                                <div class="bg-gradient-to-r from-cyan-500 to-purple-500 p-2 rounded-full">
+                                    <i class="fas fa-map-marker-alt text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-purple-400">Location</h4>
+                                    <p>San Francisco, CA</p>
+                                </div>
+                            </div>
+
+                            <div class="flex space-x-4 pt-4">
+                                <a href="#" class="w-10 h-10 rounded-full bg-cyan-900 bg-opacity-50 flex items-center justify-center text-xl text-cyan-400 hover:text-white hover:bg-cyan-500 transition">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                                <a href="#" class="w-10 h-10 rounded-full bg-purple-900 bg-opacity-50 flex items-center justify-center text-xl text-purple-400 hover:text-white hover:bg-purple-500 transition">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+                                <a href="#" class="w-10 h-10 rounded-full bg-yellow-900 bg-opacity-50 flex items-center justify-center text-xl text-yellow-400 hover:text-white hover:bg-yellow-500 transition">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                                <a href="#" class="w-10 h-10 rounded-full bg-blue-900 bg-opacity-50 flex items-center justify-center text-xl text-blue-400 hover:text-white hover:bg-blue-500 transition">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w-full md:w-1/2">
+                        <h3 class="text-2xl font-bold text-cyan-400 mb-6">Send Me a Message</h3>
+
+                        <form class="space-y-4">
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-purple-400 mb-1">Name</label>
+                                <input type="text" id="name" class="w-full px-4 py-2 bg-black bg-opacity-50 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent">
+                            </div>
+
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-purple-400 mb-1">Email</label>
+                                <input type="email" id="email" class="w-full px-4 py-2 bg-black bg-opacity-50 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent">
+                            </div>
+
+                            <div>
+                                <label for="subject" class="block text-sm font-medium text-purple-400 mb-1">Subject</label>
+                                <input type="text" id="subject" class="w-full px-4 py-2 bg-black bg-opacity-50 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent">
+                            </div>
+
+                            <div>
+                                <label for="message" class="block text-sm font-medium text-purple-400 mb-1">Message</label>
+                                <textarea id="message" rows="4" class="w-full px-4 py-2 bg-black bg-opacity-50 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent"></textarea>
+                            </div>
+
+                            <button type="submit" class="w-full bg-gradient-to-r from-cyan-500 to-purple-500 text-white font-bold py-3 px-4 rounded-lg hover:from-cyan-400 hover:to-purple-400 transition-all duration-300">
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+<footer class="py-12 px-4 bg-black bg-opacity-80 border-t border-gray-800">
+    <div class="container mx-auto text-center">
+        <h2 class="text-3xl font-bold gradient-text mb-6">Shohanur Rahman</h2>
+        <p class="text-lg text-purple-400 mb-6">Software Engineer | Full Stack Developer | Problem Solver</p>
+
+        <div class="flex justify-center space-x-6 mb-6">
+            <a href="#" class="text-cyan-400 hover:text-white transition">
+                <i class="fab fa-github text-2xl"></i>
+            </a>
+            <a href="#" class="text-blue-400 hover:text-white transition">
+                <i class="fab fa-linkedin-in text-2xl"></i>
+            </a>
+            <a href="#" class="text-yellow-400 hover:text-white transition">
+                <i class="fab fa-twitter text-2xl"></i>
+            </a>
+            <a href="#" class="text-red-400 hover:text-white transition">
+                <i class="fab fa-youtube text-2xl"></i>
+            </a>
+            <a href="#" class="text-green-400 hover:text-white transition">
+                <i class="fab fa-whatsapp text-2xl"></i>
+            </a>
+        </div>
+
+        <div class="flex flex-col md:flex-row justify-center items-center space-y-2 md:space-y-0 md:space-x-6 mb-6">
+            <a href="mailto:shohan@example.com" class="text-gray-400 hover:text-cyan-400 transition">
+                <i class="fas fa-envelope mr-2"></i> shohan@example.com
+            </a>
+            <a href="tel:+1234567890" class="text-gray-400 hover:text-cyan-400 transition">
+                <i class="fas fa-phone mr-2"></i> +1 (234) 567-890
+            </a>
+        </div>
+
+        <p class="text-gray-500 text-sm">
+            © 2023 Shohanur Rahman. All rights reserved.
+        </p>
+    </div>
+</footer>
+
+<!-- Chatbot -->
+<div class="chatbot-container">
+    <div id="chatbotBox" class="chatbot-box">
+        <div class="chatbot-header">
+            <span>AI Portfolio Assistant</span>
+            <button onclick="toggleChatbot()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="chatbot-messages">
+            <div class="message bot-message">
+                Hello! I'm your AI assistant. Ask me anything about my portfolio or software engineering!
+            </div>
+        </div>
+        <div class="chatbot-input">
+            <input type="text" id="chatbotInput" placeholder="Type your message...">
+            <button onclick="sendMessage()">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+    <div class="chatbot-icon" onclick="toggleChatbot()">
+        <i class="fas fa-robot"></i>
+    </div>
+</div>
+
+<script>
+    // Initialize particles.js
+    particlesJS("particles-js", {
+        "particles": {
+            "number": {
+                "value": 80,
+                "density": {
+                    "enable": true,
+                    "value_area": 800
+                }
+            },
+            "color": {
+                "value": "#00f0ff"
+            },
+            "shape": {
+                "type": "circle",
+                "stroke": {
+                    "width": 0,
+                    "color": "#000000"
+                },
+                "polygon": {
+                    "nb_sides": 5
+                }
+            },
+            "opacity": {
+                "value": 0.5,
+                "random": false,
+                "anim": {
+                    "enable": false,
+                    "speed": 1,
+                    "opacity_min": 0.1,
+                    "sync": false
+                }
+            },
+            "size": {
+                "value": 3,
+                "random": true,
+                "anim": {
+                    "enable": false,
+                    "speed": 40,
+                    "size_min": 0.1,
+                    "sync": false
+                }
+            },
+            "line_linked": {
+                "enable": true,
+                "distance": 150,
+                "color": "#00f0ff",
+                "opacity": 0.4,
+                "width": 1
+            },
+            "move": {
+                "enable": true,
+                "speed": 2,
+                "direction": "none",
+                "random": false,
+                "straight": false,
+                "out_mode": "out",
+                "bounce": false,
+                "attract": {
+                    "enable": false,
+                    "rotateX": 600,
+                    "rotateY": 1200
+                }
+            }
+        },
+        "interactivity": {
+            "detect_on": "canvas",
+            "events": {
+                "onhover": {
+                    "enable": true,
+                    "mode": "grab"
+                },
+                "onclick": {
+                    "enable": true,
+                    "mode": "push"
+                },
+                "resize": true
+            },
+            "modes": {
+                "grab": {
+                    "distance": 140,
+                    "line_linked": {
+                        "opacity": 1
+                    }
+                },
+                "bubble": {
+                    "distance": 400,
+                    "size": 40,
+                    "duration": 2,
+                    "opacity": 8,
+                    "speed": 3
+                },
+                "repulse": {
+                    "distance": 200,
+                    "duration": 0.4
+                },
+                "push": {
+                    "particles_nb": 4
+                },
+                "remove": {
+                    "particles_nb": 2
+                }
+            }
+        },
+        "retina_detect": true
+    });
+
+    // Theme toggle
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const body = document.body;
+
+    themeToggle.addEventListener('click', () => {
+        body.classList.toggle('light-mode');
+        if (body.classList.contains('light-mode')) {
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        } else {
+            themeIcon.classList.remove('fa-sun');
+            themeIcon.classList.add('fa-moon');
+        }
+    });
+
+    // Mobile menu toggle
+    const mobileMenuButton = document.getElementById('mobileMenuButton');
+    const closeMobileMenu = document.getElementById('closeMobileMenu');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.add('open');
+    });
+
+    closeMobileMenu.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+    });
+
+    // Close mobile menu when clicking on a link
+    document.querySelectorAll('#mobileMenu a').forEach(link => {
+        link.addEventListener('click', () => {
+            mobileMenu.classList.remove('open');
+        });
+    });
+
+    // Chatbot functions
+    function toggleChatbot() {
+        const chatbotBox = document.getElementById('chatbotBox');
+        chatbotBox.style.display = chatbotBox.style.display === 'flex' ? 'none' : 'flex';
+    }
+
+    function sendMessage() {
+        const input = document.getElementById('chatbotInput');
+        const message = input.value.trim();
+        if (!message) return;
+
+        const messagesContainer = document.querySelector('.chatbot-messages');
+
+        // Add user message
+        const userMessage = document.createElement('div');
+        userMessage.className = 'message user-message';
+        userMessage.textContent = message;
+        messagesContainer.appendChild(userMessage);
+
+        // Clear input
+        input.value = '';
+
+        // Simulate AI response after a short delay
+        setTimeout(() => {
+            const responses = [
+                "That's an interesting question! While I'm just a demo bot, feel free to explore my portfolio to learn more.",
+                "Thanks for your message! I can't respond fully, but you can find more information in my portfolio sections.",
+                "Great question! Check out my experience or skills section for more details.",
+                "I'd be happy to help! My projects section might have what you're looking for.",
+                "Interesting point! You might find relevant information in my blogs or certificates."
+            ];
+
+            const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+
+            const botMessage = document.createElement('div');
+            botMessage.className = 'message bot-message';
+            botMessage.textContent = randomResponse;
+            messagesContainer.appendChild(botMessage);
+
+            // Scroll to bottom
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }, 1000);
+
+        // Scroll to bottom
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    // Allow sending message with Enter key
+    document.getElementById('chatbotInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            sendMessage();
+        }
+    });
+
+    // Intersection Observer for section animations
+    const sections = document.querySelectorAll('.section');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, {
+        threshold: 0.1
+    });
+
+    sections.forEach(section => {
+        observer.observe(section);
+    });
+
+    // Typing animation for hero subtitle
+    const roles = ["Software Engineer", "Full Stack Developer", "Problem Solver", "Tech Enthusiast"];
+    let roleIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let typingSpeed = 100;
+
+    function type() {
+        const currentRole = roles[roleIndex];
+        const typingElement = document.querySelector('.typing-animation');
+
+        if (isDeleting) {
+            typingElement.textContent = currentRole.substring(0, charIndex - 1);
+            charIndex--;
+            typingSpeed = 50;
+        } else {
+            typingElement.textContent = currentRole.substring(0, charIndex + 1);
+            charIndex++;
+            typingSpeed = 100;
+        }
+
+        if (!isDeleting && charIndex === currentRole.length) {
+            isDeleting = true;
+            typingSpeed = 1500; // Pause at end of word
+        } else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            roleIndex = (roleIndex + 1) % roles.length;
+            typingSpeed = 500; // Pause before typing next word
+        }
+
+        setTimeout(type, typingSpeed);
+    }
+
+    // Start typing animation after a short delay
+    setTimeout(type, 1000);
+
+    // Animate skill bars on scroll
+    const skillBars = document.querySelectorAll('.skill-progress');
+    const skillObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const width = entry.target.style.width;
+                entry.target.style.width = '0';
+                setTimeout(() => {
+                    entry.target.style.width = width;
+                }, 100);
+            }
+        });
+    }, {
+        threshold: 0.5
+    });
+
+    skillBars.forEach(bar => {
+        skillObserver.observe(bar);
+    });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+
+            if (targetElement) {
+                window.scrollTo({
+                    top: targetElement.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+</script>
+</body>
+</html>

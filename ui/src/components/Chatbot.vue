@@ -8,10 +8,10 @@
         </button>
       </div>
       <div class="chatbot-messages">
-        <div class="message bot-message" v-html="formatMessage(`Hello! I'm your AI assistant. Ask me anything about shohanur's portfolio!`)"></div>
+        <div class="message bot-message" v-html="greetingMessage"></div>
         <div v-for="(message, index) in messages" :key="index"
              :class="message.type === 'user' ? 'message user-message' : 'message bot-message'"
-             v-html="formatMessage(message.text)">
+             v-html="message.text">
         </div>
       </div>
       <ChatbotInput @send-message="handleMessage" :isLoading="isLoading"/>
@@ -39,6 +39,11 @@ export default {
       conversationId: crypto.randomUUID(),
       isLoading: false,
     };
+  },
+  computed: {
+    greetingMessage() {
+      return this.formatMessage(`Greetings! I'm here to assist you as your AI assistant. Feel free to inquire about Shohanur's' portfolio or request to schedule a meeting with him`);
+    }
   },
   methods: {
     toggleChatbot() {
@@ -70,7 +75,7 @@ export default {
         }).then(response => {
           // Add bot response from API
           this.messages.push({
-            text: response?.reply || 'Thanks for your message! Check out the portfolio sections for more info.',
+            text: this.formatMessage(response?.reply) || 'Thanks for your message! Check out the portfolio sections for more info.',
             type: 'bot'
           });
           this.scrollToBottom();

@@ -23,6 +23,9 @@ public class PortfolioRagConfig {
     @Value("portfolio-store.json")
     private String vectorStoreName;
 
+    @Value("classpath:/data/portfolio.json")
+    private Resource models;
+
     private final ResourceLoader resourceLoader;
 
     public PortfolioRagConfig(ResourceLoader resourceLoader) {
@@ -32,14 +35,14 @@ public class PortfolioRagConfig {
     @Bean(name = "portfolioVectorStore")
     public SimpleVectorStore portfolioVectorStore(OpenAiEmbeddingModel embeddingModel) {
         var simpleVectorStore = SimpleVectorStore.builder(embeddingModel).build();
-        var vectorStoreFile = getVectorStoreFile();
-        if (vectorStoreFile.exists()) {
-            log.info("Vector Store File Exists, loading from file");
-            simpleVectorStore.load(vectorStoreFile);
+        Resource resource = resourceLoader.getResource("classpath:/data/" + vectorStoreName);
+        if (resource.exists()) {
+            log.info("Vector Store File Exists in classpath, loading from classpath");
+            simpleVectorStore.load(resource);
         } else {
             log.info("Vector Store File Does Not Exist, loading documents");
-            Resource resource = resourceLoader.getResource(System.getProperty("user.dir") + "/src/main/resources/data/portfolio.json");
-            TextReader textReader = new TextReader(resource);
+            var vectorStoreFile = getVectorStoreFile();
+            TextReader textReader = new TextReader(models);
             textReader.getCustomMetadata().put("filename", "portfolio.txt");
             List<Document> documents = textReader.get();
             TextSplitter textSplitter = new TokenTextSplitter();
@@ -51,8 +54,7 @@ public class PortfolioRagConfig {
     }
 
     private File getVectorStoreFile() {
-        String absolutePath = System.getProperty("user.dir") + "/src/main/resources/data/" + vectorStoreName;
-        log.info("Vector Store File Path: {}", absolutePath);
+        String absolutePath = System.getProperty("user.dir") + "src/main/resources/data/" + vectorStoreName;
         return new File(absolutePath);
     }
 }

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 
 import java.io.File;
 import java.util.List;
@@ -22,8 +23,11 @@ public class PortfolioRagConfig {
     @Value("portfolio-store.json")
     private String vectorStoreName;
 
-    @Value("classpath:/data/portfolio.json")
-    private Resource models;
+    private final ResourceLoader resourceLoader;
+
+    public PortfolioRagConfig(ResourceLoader resourceLoader) {
+        this.resourceLoader = resourceLoader;
+    }
 
     @Bean(name = "portfolioVectorStore")
     public SimpleVectorStore portfolioVectorStore(OpenAiEmbeddingModel embeddingModel) {
@@ -34,7 +38,8 @@ public class PortfolioRagConfig {
             simpleVectorStore.load(vectorStoreFile);
         } else {
             log.info("Vector Store File Does Not Exist, loading documents");
-            TextReader textReader = new TextReader(models);
+            Resource resource = resourceLoader.getResource(System.getProperty("user.dir") + "/src/main/resources/data/portfolio.json");
+            TextReader textReader = new TextReader(resource);
             textReader.getCustomMetadata().put("filename", "portfolio.txt");
             List<Document> documents = textReader.get();
             TextSplitter textSplitter = new TokenTextSplitter();

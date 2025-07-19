@@ -18,7 +18,7 @@ export default defineConfig({
   server: {
     port: 3000,
     proxy: {
-
+      target: 'http://localhost:8000',
     }
   }
 })

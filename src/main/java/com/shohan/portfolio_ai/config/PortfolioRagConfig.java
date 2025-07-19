@@ -54,7 +54,7 @@ public class PortfolioRagConfig {
     }
 
     private File getVectorStoreFile() {
-        String absolutePath = System.getProperty("user.dir") + "src/main/resources/data/" + vectorStoreName;
+        String absolutePath = "src/main/resources/data/" + vectorStoreName;
         return new File(absolutePath);
     }
 }

@@ -80,7 +80,7 @@ export default {
         this.scrollToBottom();
 
         this.isLoading = true;
-        fetch('http://localhost:8080/api/v1/ai/ask', {
+        fetch('/api/v1/ai/ask', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -376,5 +376,19 @@ export default {
   border-radius: 8px;
   margin: 10px 0;
   border: 1px solid rgba(0, 240, 255, 0.3);
+}
+
+@media screen and (max-width: 480px) {
+  .chatbot-box {
+    width: calc(100vw - 40px);
+    height: 70vh;
+    bottom: 80px;
+    right: 20px;
+  }
+
+  .chatbot-container {
+    bottom: 10px;
+    right: 10px;
+  }
 }
 </style>

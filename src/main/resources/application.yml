@@ -17,7 +17,8 @@ spring:
 
 springdoc:
   swagger-ui:
-    path: /
+    path: /swagger-ui
+    enabled: on
 
 app:
   calender:

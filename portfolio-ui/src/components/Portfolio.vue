@@ -1,16 +1,18 @@
 <template>
-  <Sidebar/>
-  <!-- Main Content -->
-  <main class="ml-16 p-6">
-    <Header :data="portfolio" />
-    <AboutMe :aboutMe="portfolio.aboutMe"/>
-    <Experience :experiences="portfolio.experiences"/>
-    <Education :educations="portfolio.educations"/>
-    <Projects :projects="portfolio.projects"/>
-    <Skills :skills="portfolio.skills"/>
-    <Certificates :certificates="portfolio.certificates"/>
-    <Blogs/>
-  </main>
+  <div class="flex flex-col md:flex-row group">
+    <Sidebar/>
+    <!-- Main Content -->
+    <main class="w-full p-6">
+      <Header :data="portfolio" />
+      <AboutMe :aboutMe="portfolio.aboutMe"/>
+      <Experience :experiences="portfolio.experiences"/>
+      <Education :educations="portfolio.educations"/>
+      <Projects :projects="portfolio.projects"/>
+      <Skills :skills="portfolio.skills"/>
+      <Certificates :certificates="portfolio.certificates"/>
+      <Blogs/>
+    </main>
+  </div>
   <Footer :data="portfolio"/>
   <Chatbot/>
 </template>
@@ -225,7 +227,7 @@ export default {
           expectedSalary: "RM 11,000 - RM 12,000 per month",
         },
         resumeLinks: {
-          pdf: "https://example.com/resume.pdf"
+          pdf: "/Shohanur_Resume.pdf"
         }
       },
       faqs: [

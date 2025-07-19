@@ -20,7 +20,7 @@ export default {
 
     <div class="header-content relative z-10 px-6 py-16 md:py-28 lg:py-32 text-center">
       <!-- Name with animated gradient -->
-      <h1 class="text-5xl md:text-7xl lg:text-8xl font-extrabold mb-4 tracking-tight">
+      <h1 class="text-4xl md:text-7xl lg:text-8xl font-extrabold mb-4 tracking-tight">
       <span class="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 animate-gradient">
         {{ data.name }}
       </span>
@@ -28,7 +28,7 @@ export default {
 
       <!-- Title with typing animation effect -->
       <div class="typewriter-container mb-8">
-        <p class="text-2xl md:text-3xl font-mono text-cyan-300">
+        <p class="text-xl md:text-3xl font-mono text-cyan-300">
           <span>{{ data.title }}</span>
           <span class="text-cyan-400 mx-3">|</span>
           <span>{{ data.titleTag }}</span>

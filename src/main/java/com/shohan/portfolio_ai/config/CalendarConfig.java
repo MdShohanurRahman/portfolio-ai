@@ -51,7 +51,7 @@ public class CalendarConfig {
         this.resourceLoader = resourceLoader;
     }
 
-    @Bean
+
     public Calendar serviceAccountCalendar() throws IOException, GeneralSecurityException {
         // Load service account credentials from JSON key file
         Resource resource = resourceLoader.getResource(serviceCredentialsPath);
@@ -69,7 +69,7 @@ public class CalendarConfig {
                 .build();
     }
 
-    @Bean
+
     public Calendar userAccountCalender() throws IOException, GeneralSecurityException {
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
         // Load client secrets.
@@ -94,7 +94,7 @@ public class CalendarConfig {
 
     @Bean
     @Primary
-    public Calendar googleCalender(Calendar serviceAccountCalendar, Calendar userAccountCalender) {
-        return enableServiceAccount ? serviceAccountCalendar : userAccountCalender;
+    public Calendar googleCalender() throws GeneralSecurityException, IOException {
+        return enableServiceAccount ? serviceAccountCalendar() : userAccountCalender();
     }
 }

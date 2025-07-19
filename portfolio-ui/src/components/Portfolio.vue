@@ -2,16 +2,16 @@
   <Sidebar/>
   <!-- Main Content -->
   <main class="ml-16 p-6">
-    <Header/>
-    <AboutMe/>
-    <Experience/>
-    <Education/>
-    <Projects/>
-    <Skills/>
-    <Certificates/>
+    <Header :data="portfolio" />
+    <AboutMe :aboutMe="portfolio.aboutMe"/>
+    <Experience :experiences="portfolio.experiences"/>
+    <Education :educations="portfolio.educations"/>
+    <Projects :projects="portfolio.projects"/>
+    <Skills :skills="portfolio.skills"/>
+    <Certificates :certificates="portfolio.certificates"/>
     <Blogs/>
   </main>
-  <Footer/>
+  <Footer :data="portfolio"/>
   <Chatbot/>
 </template>
 <script>
@@ -62,7 +62,7 @@ export default {
           leetcode: "https://leetcode.com/u/user1633lF/",
           facebook: "https://www.facebook.com/shohanur.rahman3/",
         },
-        education: [
+        educations: [
           {
             institution: "Mawlana Bhashani Science and Technology University",
             degree: "Bsc Engineering in Information and Communication Technology",
@@ -148,6 +148,7 @@ export default {
             items: [
               {name: "Spring Boot", proficiency: "Advanced", years: "4"},
               {name: "Dropwizard", proficiency: "Intermediate", years: "2"},
+              {name: "Groovy Grails", proficiency: "Intermediate", years: "3"},
               {name: "Django", proficiency: "Basic", years: "1"},
               {name: "Node.js", proficiency: "Basic", years: "1"}
             ]
@@ -168,9 +169,18 @@ export default {
               {name: "Docker", proficiency: "Intermediate", years: "3"},
               {name: "Kubernetes", proficiency: "Basic", years: "1"},
               {name: "AWS", proficiency: "Intermediate", years: "2"},
-              {name: "Firebase", proficiency: "Basic", years: "1"},
               {name: "RabbitMQ", proficiency: "Intermediate", years: "2"},
               {name: "Kafka", proficiency: "Basic", years: "1"}
+            ]
+          },
+          {
+            category: "Soft Skills",
+            items: [
+              {name: "Problem Solving", proficiency: "Expert", years: "6"},
+              {name: "Team Collaboration", proficiency: "Expert", years: "6"},
+              {name: "Communication", proficiency: "Advanced", years: "6"},
+              {name: "Agile Methodologies", proficiency: "Intermediate", years: "4"},
+              {name: "Time Management", proficiency: "Advanced", years: "6"}
             ]
           }
         ],
@@ -213,12 +223,6 @@ export default {
           isAvailable: true,
           availabilityMessage: "Currently available for new opportunities",
           expectedSalary: "RM 11,000 - RM 12,000 per month",
-        },
-        family: {
-          wife: "Farzana Akter",
-          children: [
-            {name: "Izwan Rahman Sanan"},
-          ],
         },
         resumeLinks: {
           pdf: "https://example.com/resume.pdf"

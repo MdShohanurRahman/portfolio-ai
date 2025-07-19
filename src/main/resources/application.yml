@@ -26,3 +26,4 @@ app:
     tokensDirectoryPath: ./tokens
     clientCredentialsPath: classpath:/calendar/client-credentials.json
     serviceCredentialsPath: classpath:/calendar/service-credentials.json
+    enableServiceAccount: false

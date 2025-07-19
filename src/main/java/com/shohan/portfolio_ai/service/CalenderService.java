@@ -23,15 +23,18 @@ public class CalenderService {
     private final Calendar calendar;
     private final String calenderId;
     private final String timeZone;
+    private final boolean enableServiceAccount;
 
     public CalenderService(
             Calendar calendar,
             @Value("${app.calender.email}") String calenderId,
-            @Value("${app.calender.timezone}") String timeZone
+            @Value("${app.calender.timezone}") String timeZone,
+            @Value("${app.calender.enableServiceAccount}") boolean enableServiceAccount
     ) {
         this.calendar = calendar;
         this.calenderId = calenderId;
         this.timeZone = timeZone;
+        this.enableServiceAccount = enableServiceAccount;
     }
 
     /**
@@ -108,7 +111,7 @@ public class CalenderService {
 
 
         // Add attendees if provided
-        if (attendees != null && !attendees.isEmpty()) {
+        if (!enableServiceAccount && (attendees != null && !attendees.isEmpty())) {
             event.setAttendees(attendees.stream()
                     .map(email -> new EventAttendee().setEmail(email))
                     .toList());

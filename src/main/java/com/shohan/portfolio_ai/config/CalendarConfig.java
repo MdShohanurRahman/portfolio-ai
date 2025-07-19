@@ -34,17 +34,20 @@ public class CalendarConfig {
     private final String clientCredentialsPath;
     private final String serviceCredentialsPath;
     private final String tokensDirectoryPath;
+    private final boolean enableServiceAccount;
     private final ResourceLoader resourceLoader;
 
     public CalendarConfig(
             @Value("${app.calender.clientCredentialsPath}") String clientCredentialsPath,
             @Value("${app.calender.serviceCredentialsPath}") String serviceCredentialsPath,
             @Value("${app.calender.tokensDirectoryPath}") String tokensDirectoryPath,
+            @Value("${app.calender.enableServiceAccount}") boolean enableServiceAccount,
             ResourceLoader resourceLoader
     ) {
         this.clientCredentialsPath = clientCredentialsPath;
         this.serviceCredentialsPath = serviceCredentialsPath;
         this.tokensDirectoryPath = tokensDirectoryPath;
+        this.enableServiceAccount = enableServiceAccount;
         this.resourceLoader = resourceLoader;
     }
 
@@ -67,7 +70,6 @@ public class CalendarConfig {
     }
 
     @Bean
-    @Primary
     public Calendar userAccountCalender() throws IOException, GeneralSecurityException {
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
         // Load client secrets.
@@ -88,5 +90,11 @@ public class CalendarConfig {
         return new Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY, userCredentials)
                 .setApplicationName(APPLICATION_NAME)
                 .build();
+    }
+
+    @Bean
+    @Primary
+    public Calendar googleCalender(Calendar serviceAccountCalendar, Calendar userAccountCalender) {
+        return enableServiceAccount ? serviceAccountCalendar : userAccountCalender;
     }
 }

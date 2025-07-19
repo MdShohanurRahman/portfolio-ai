@@ -20,16 +20,16 @@ import java.util.List;
 @Service
 public class CalenderService {
 
-    private final Calendar googleCalender;
+    private final Calendar calendar;
     private final String calenderId;
     private final String timeZone;
 
     public CalenderService(
-            Calendar googleCalender,
+            Calendar calendar,
             @Value("${app.calender.email}") String calenderId,
             @Value("${app.calender.timezone}") String timeZone
     ) {
-        this.googleCalender = googleCalender;
+        this.calendar = calendar;
         this.calenderId = calenderId;
         this.timeZone = timeZone;
     }
@@ -57,7 +57,7 @@ public class CalenderService {
         DateTime timeMax = new DateTime(endZdt.toInstant().toEpochMilli());
 
         // Query events within the specified time range
-        Events events = googleCalender.events().list(calenderId)
+        Events events = calendar.events().list(calenderId)
                 .setTimeMin(timeMin)
                 .setTimeMax(timeMax)
                 .setSingleEvents(true) // Expand recurring events into individual instances
@@ -116,7 +116,7 @@ public class CalenderService {
         }
 
         // Insert the event into the specified calendar
-        return googleCalender
+        return calendar
                 .events().insert(calenderId, event)
                 .setSendNotifications(true)
                 .execute();

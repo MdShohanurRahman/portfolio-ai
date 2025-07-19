@@ -24,4 +24,5 @@ app:
     email: shohan.drmc@gmail.com
     timezone: Asia/Kuala_Lumpur
     tokensDirectoryPath: ./tokens
-    credentialsPath: classpath:/calendar/credentials.json
+    clientCredentialsPath: classpath:/calendar/client-credentials.json
+    serviceCredentialsPath: classpath:/calendar/service-credentials.json

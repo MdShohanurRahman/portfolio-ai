@@ -1,8 +1,10 @@
 ﻿# Portfolio Virtual Assistant with Spring AI
 
-![Demo Screenshot](/screenshot/demo.png)
-[![Watch the Demo](https://img.youtube.com/vi/SYsIUk8VgYk/0.jpg)](https://www.youtube.com/watch?v=SYsIUk8VgYk)
+## 🎬 Video Demo
 
+[![Portfolio AI Assistant Demo](https://img.youtube.com/vi/SYsIUk8VgYk/maxresdefault.jpg)](https://www.youtube.com/watch?v=SYsIUk8VgYk)
+
+▶️ [Watch full demo on YouTube](https://www.youtube.com/watch?v=SYsIUk8VgYk)
 A smart virtual assistant integrated into my professional portfolio that handles recruiter inquiries using Spring AI, RAG, and Google Calendar integration.
 
 ## 🚀 Features
